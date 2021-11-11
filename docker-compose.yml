@@ -3,24 +3,19 @@ version: '3.9'
 services:
   prometheus:
     container_name: prometheus
+    init: true
     image: prom/prometheus:latest
     volumes:
      - ./prometheus.yml:/etc/prometheus/prometheus.yml
      - prom-data:/prometheus  
     ports:
       - 9090:9090
-    #  node-exporter:
-    # container_name: prometheus-node-exporter      
-    #depends_on:
-    # - prometheus
-    #image: prom/node-exporter:latest   
-    #ports:
-    # - 9100:9100
            
   pure-exporter:
     depends_on:
      - prometheus
     container_name: pure-exporter
+    init: true
     image: quay.io/purestorage/pure-exporter:1.2.5-a
     restart: always
     ports:
